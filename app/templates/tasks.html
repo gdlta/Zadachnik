@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Tasks</h1>
+<a href="{{ url_for('task.add_task') }}">Add Task</a>
+<ul>
+    {% for task in tasks %}
+    <li>
+        <h3>{{ task.title }}</h3>
+        <p>{{ task.description }}</p>
+        <p>Category: {{ task.category }}</p>
+        <p>Due Date: {{ task.due_date }}</p>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

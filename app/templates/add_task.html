@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h3 class="text-center">Добавить задачу</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="form-group">
+                            {{ form.title.label(class="form-label") }}
+                            {{ form.title(class="form-control", placeholder="Введите название задачи") }}
+                            {% if form.title.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.title.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.description.label(class="form-label") }}
+                            {{ form.description(class="form-control", placeholder="Введите описание задачи") }}
+                            {% if form.description.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.description.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.category.label(class="form-label") }}
+                            {{ form.category(class="form-control", placeholder="Введите категорию") }}
+                            {% if form.category.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.category.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.due_date.label(class="form-label") }}
+                            {{ form.due_date(class="form-control", type="datetime-local") }}
+                            {% if form.due_date.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.due_date.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.is_completed.label(class="form-label") }}
+                            {{ form.is_completed(class="form-check-input") }}
+                        </div>
+                        <div class="form-group text-center">
+                            {{ form.submit(class="btn btn-primary btn-block") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

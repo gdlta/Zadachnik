@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Список задач</h1>
+    <a href="{{ url_for('task.add_task') }}" class="btn btn-primary">Добавить задачу</a>
+
+    <div class="task-list mt-3">
+        {% if tasks %}
+            {% for task in tasks %}
+                <div class="task-item card mt-3">
+                    <div class="card-body">
+                        <h3>{{ task.title }}</h3>
+                        <p>{{ task.description }}</p>
+                        <p><strong>Категория:</strong> {{ task.category }}</p>
+                        <p><strong>Срок выполнения:</strong> {{ task.due_date.strftime('%Y-%m-%d %H:%M') }}</p>
+                        <p><strong>Статус:</strong> {{ 'Выполнена' if task.is_completed else 'Не выполнена' }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Задачи отсутствуют.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
