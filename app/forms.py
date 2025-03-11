@@ -23,5 +23,4 @@ class TaskForm(FlaskForm):
     description = TextAreaField('Описание задачи', validators=[DataRequired(), Length(max=500)])
     category = StringField('Категория', validators=[DataRequired(), Length(max=50)])
     due_date = DateTimeField('Срок выполнения', format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
-    is_completed = BooleanField('Задача выполнена')
     submit = SubmitField('Добавить задачу')

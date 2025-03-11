@@ -75,10 +75,6 @@ def add_task():
         description = form.description.data
         category = form.category.data
         due_date = form.due_date.data
-        is_completed = form.is_completed.data
-
-
-        user_id = current_user.id
 
 
         new_task = Task(
@@ -86,8 +82,8 @@ def add_task():
             description=description,
             category=category,
             due_date=due_date,
-            is_completed=is_completed,
-            user_id=user_id
+            is_completed=False,
+            user_id=current_user.id
         )
 
 
@@ -97,3 +93,36 @@ def add_task():
         flash('Задача успешно добавлена!', 'success')
         return redirect(url_for('main.index'))
     return render_template('add_task.html', form=form)
+
+@task_routes.route('/delete_task/<int:task_id>', methods=['POST'])
+@login_required
+def delete_task(task_id):
+    task = Task.query.get_or_404(task_id)
+
+
+    if task.user_id != current_user.id:
+        flash('У вас нет прав на удаление этой задачи.', 'error')
+        return redirect(url_for('main.index'))
+
+
+    db.session.delete(task)
+    db.session.commit()
+
+    flash('Задача успешно удалена!', 'success')
+    return redirect(url_for('main.index'))
+
+@task_routes.route('/complete_task/<int:task_id>', methods=['POST'])
+@login_required
+def complete_task(task_id):
+    task = Task.query.get_or_404(task_id)
+
+    if task.user_id != current_user.id:
+        flash('У вас нет прав на изменение этой задачи.', 'error')
+        return redirect(url_for('main.index'))
+
+
+    task.is_completed = True
+    db.session.commit()
+
+    flash('Задача отмечена как выполненная!', 'success')
+    return redirect(url_for('main.index'))
