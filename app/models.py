@@ -1,6 +1,7 @@
 from app import db
 from flask_login import UserMixin
 
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
@@ -12,6 +13,7 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
 
+
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
@@ -20,6 +22,7 @@ class Task(db.Model):
     due_date = db.Column(db.DateTime, nullable=False)
     is_completed = db.Column(db.Boolean, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    image = db.Column(db.String(100), nullable=True)
 
     def __repr__(self):
         return f"Task('{self.title}', '{self.due_date}')"
