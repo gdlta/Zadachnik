@@ -78,7 +78,6 @@ task_routes = Blueprint('task', __name__)
 def add_task():
     form = TaskForm()
     if form.validate_on_submit():
-        # Обработка загрузки файла
         image_filename = None
         if form.image.data:
             image = form.image.data
@@ -90,7 +89,6 @@ def add_task():
                 image.save(image_path)
                 image_filename = filename
 
-        # Создание новой задачи
         new_task = Task(
             title=form.title.data,
             description=form.description.data,
@@ -118,7 +116,6 @@ def delete_task(task_id):
         flash('У вас нет прав на удаление этой задачи.', 'error')
         return redirect(url_for('main.index'))
 
-    # Удаление связанного изображения
     if task.image:
         try:
             image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], task.image)
